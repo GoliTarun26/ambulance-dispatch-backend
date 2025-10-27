@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LifeLine - Emergency Medical Dispatch</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Sidebar Navigation -->
+    <button class="menu-toggle" id="menuToggle">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h3>LifeLine</h3>
+            <i class="fas fa-times" id="sidebarClose"></i>
+        </div>
+        <ul class="sidebar-menu">
+            <li><a href="#" class="nav-item active" data-target="user-dashboard">
+                <i class="fas fa-user"></i> Emergency Request
+            </a></li>
+            <li><a href="#" class="nav-item" data-target="driver-login">
+                <i class="fas fa-ambulance"></i> Driver Portal
+            </a></li>
+        </ul>
+    </nav>
+
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- Header Section -->
+    <header>
+        <div class="container">
+            <div class="header-container">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-heartbeat"></i>
+                    </div>
+                    <div class="logo-text">
+                        <h1>LifeLine</h1>
+                        <p class="tagline">Emergency Medical Dispatch</p>
+                    </div>
+                </div>
+                <div class="system-status">
+                    <div class="status-indicator"></div>
+                    <span>SYSTEM ONLINE</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <div class="container">
+            <!-- User Dashboard Section -->
+            <section id="user-dashboard" class="dashboard-section">
+                <div class="dashboard">
+                    <!-- Emergency Request Card -->
+                    <div class="card emergency-request">
+                        <div class="card-header">
+                            <h2><i class="fas fa-ambulance"></i> Emergency Request</h2>
+                        </div>
+                        <div class="card-body">
+                            <form id="emergencyForm">
+                                <div class="form-group">
+                                    <label for="patientName">Patient Name</label>
+                                    <div class="input-wrapper">
+                                        <i class="fas fa-user"></i>
+                                        <input type="text" id="patientName" placeholder="Enter patient name">
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="contactNumber">Contact Number</label>
+                                    <div class="input-wrapper">
+                                        <i class="fas fa-phone"></i>
+                                        <input type="tel" id="contactNumber" placeholder="10-digit contact number">
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="emergencyType">Emergency Type</label>
+                                    <div class="input-wrapper">
+                                        <i class="fas fa-exclamation-triangle"></i>
+                                        <select id="emergencyType">
+                                            <option value="">Select emergency type</option>
+                                            <option value="cardiac">Cardiac Arrest</option>
+                                            <option value="accident">Accident</option>
+                                            <option value="respiratory">Respiratory Distress</option>
+                                            <option value="stroke">Stroke</option>
+                                            <option value="other">Other</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label>Additional Notes</label>
+                                    <div class="input-wrapper">
+                                        <i class="fas fa-sticky-note"></i>
+                                        <textarea id="notes" placeholder="Any additional information..."></textarea>
+                                    </div>
+                                </div>
+                                
+                                <button type="button" id="book-btn" class="btn-primary">
+                                    <i class="fas fa-bell"></i>
+                                    REQUEST EMERGENCY ASSISTANCE
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Status Dashboard -->
+                    <div class="card status-dashboard">
+                        <div class="card-header">
+                            <h2><i class="fas fa-tachometer-alt"></i> Dispatch Status</h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="status-display" id="statusDisplay">
+                                <div class="status-message">
+                                    <i class="fas fa-info-circle"></i>
+                                    <p>AWAITING EMERGENCY REQUEST</p>
+                                </div>
+                            </div>
+                            
+                            <div class="metrics-dashboard" id="metricsDashboard">
+                                <div class="metric-card">
+                                    <div class="metric-icon">
+                                        <i class="fas fa-ambulance"></i>
+                                    </div>
+                                    <div class="metric-content">
+                                        <div class="metric-label">AMBULANCE ID</div>
+                                        <div class="metric-value" id="ambulanceId">---</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="metric-card">
+                                    <div class="metric-icon">
+                                        <i class="fas fa-road"></i>
+                                    </div>
+                                    <div class="metric-content">
+                                        <div class="metric-label">DISTANCE</div>
+                                        <div class="metric-value" id="distance">---</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="metric-card">
+                                    <div class="metric-icon">
+                                        <i class="fas fa-clock"></i>
+                                    </div>
+                                    <div class="metric-content">
+                                        <div class="metric-label">ESTIMATED ARRIVAL</div>
+                                        <div class="metric-value" id="eta">---</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="map-preview">
+                                <div class="map-placeholder">
+                                    <i class="fas fa-map-marked-alt"></i>
+                                    <p>Ambulance tracking will appear here</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Driver Login Section -->
+            <section id="driver-login" class="dashboard-section hidden">
+                <div class="card driver-login">
+                    <div class="card-header">
+                        <h2><i class="fas fa-ambulance"></i> Driver Login</h2>
+                    </div>
+                    <div class="card-body">
+                        <form id="driverLoginForm">
+                            <div class="form-group">
+                                <label for="driverUsername">Username</label>
+                                <div class="input-wrapper">
+                                    <i class="fas fa-user"></i>
+                                    <input type="text" id="driverUsername" placeholder="Enter your username" required>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="driverPassword">Password</label>
+                                <div class="input-wrapper">
+                                    <i class="fas fa-lock"></i>
+                                    <input type="password" id="driverPassword" placeholder="Enter your password" required>
+                                </div>
+                            </div>
+                            
+                            <button type="submit" class="btn-primary">
+                                <i class="fas fa-sign-in-alt"></i>
+                                LOGIN TO DRIVER PORTAL
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Driver Dashboard Section -->
+            <section id="driver-dashboard" class="dashboard-section hidden">
+                <div class="card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-tachometer-alt"></i> Driver Dashboard</h2>
+                        <button id="logoutBtn" class="btn-secondary">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <div class="driver-status" id="driverStatus">
+                            <div class="status-indicator available"></div>
+                            <span>STATUS: <span id="currentStatus">AVAILABLE</span></span>
+                        </div>
+                        
+                        <div class="assigned-emergency" id="assignedEmergency">
+                            <div class="emergency-header">
+                                <h3><i class="fas fa-exclamation-triangle"></i> Current Assignment</h3>
+                            </div>
+                            <div class="emergency-details" id="emergencyDetails">
+                                <p>No active emergency assignments</p>
+                            </div>
+                        </div>
+                        
+                        <div class="action-buttons">
+                            <button id="completeBtn" class="btn-success" disabled>
+                                <i class="fas fa-check-circle"></i> MARK AS COMPLETED
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Alert Overlay -->
+            <div class="alert-overlay" id="alertOverlay">
+                <div class="alert-content">
+                    <div class="alert-icon">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <h3>EMERGENCY PROTOCOL ACTIVATED</h3>
+                    <p>Please stay on the line. Help is on the way.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-info">
+                    <p><i class="fas fa-shield-alt"></i> Secure & Confidential</p>
+                    <p><i class="fas fa-clock"></i> 24/7 Emergency Services</p>
+                    <p><i class="fas fa-bolt"></i> Average Response Time: <span id="avgResponse">~4 min</span></p>
+                </div>
+                <div class="footer-copyright">
+                    <p>&copy; 2025 LifeLine Emergency Dispatch System. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Hidden inputs for coordinates -->
+    <input type="hidden" id="user-lat" />
+    <input type="hidden" id="user-lon" />
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
